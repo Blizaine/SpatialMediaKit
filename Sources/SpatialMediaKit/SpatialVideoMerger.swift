@@ -57,7 +57,7 @@ public class SpatialVideoMerger {
     )
   {
 
-    var assetWriter = try! AVAssetWriter(
+    let assetWriter = try! AVAssetWriter(
       outputURL: outputUrl,
       fileType: .mov
     )
@@ -66,7 +66,7 @@ public class SpatialVideoMerger {
     let heroEye =
       leftIsPrimary ? kCMFormatDescriptionHeroEye_Left : kCMFormatDescriptionHeroEye_Right
 
-    let outputSettingsDict: [String: Any] = [
+    var outputSettingsDict: [String: Any] = [
       AVVideoWidthKey: outputWidth,
       AVVideoHeightKey: outputHeight,
       AVVideoColorPropertiesKey: [
