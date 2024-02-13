@@ -57,7 +57,7 @@ public class SpatialVideoMerger {
     )
   {
 
-    let assetWriter = try! AVAssetWriter(
+    var assetWriter = try! AVAssetWriter(
       outputURL: outputUrl,
       fileType: .mov
     )
@@ -88,9 +88,11 @@ public class SpatialVideoMerger {
     ]
 
     if let hDisparityAdj = hDisparityAdj {
-      let compressionProps =
-        outputSettingsDict[AVVideoCompressionPropertiesKey] as! NSMutableDictionary
-      compressionProps[kVTCompressionPropertyKey_HorizontalDisparityAdjustment] = hDisparityAdj
+      if let compressionPropsDict = outputSettingsDict[AVVideoCompressionPropertiesKey] as? [String: Any] {
+        let compressionProps = NSMutableDictionary(dictionary: compressionPropsDict)
+        compressionProps[kVTCompressionPropertyKey_HorizontalDisparityAdjustment] = hDisparityAdj
+        outputSettingsDict[AVVideoCompressionPropertiesKey] = compressionProps
+      }
     }
 
     let assetWriterInput = AVAssetWriterInput(
